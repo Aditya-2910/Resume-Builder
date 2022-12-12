@@ -2,6 +2,7 @@ const exp = require('express')
 const app = exp()
 const mclient = require('mongodb').MongoClient;
 const userApp = require('./APIs/userApi');
+const jwt = require('jsonwebtoken');
 
 //importing path module for the connection of build with server.js
 const path = require('path');
@@ -37,10 +38,11 @@ mclient.connect(DBurl)
     //creating collection
 
     let userCollectionObj = dbobj.collection("userCollection");
-
+    let signupCollectionObj = dbobj.collection("signupCollection");
 
     //for sharing the object with the APIs
     app.set("userCollectionObj",userCollectionObj)
+    app.set("signupCollectionObj",signupCollectionObj)
 
     console.log('Database connection success')
 })

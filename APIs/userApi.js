@@ -1,6 +1,8 @@
+const { request } = require('express');
 const exp = require('express')
 const userApp = exp.Router();
 const expressAsyncHandler = require('express-async-handler') //to handle asynchronous errors
+const jwt = require('jsonwebtoken')
 
 
 //to extract the data from the body
@@ -24,6 +26,47 @@ userApp.post('/create-user',expressAsyncHandler(async (request,response)=>{
 
     response.send({message:"User created successfully"});
 
+
+}))
+
+userApp.post('/Login',expressAsyncHandler(async(request,response)=>{
+
+    let signupCollectionObj = request.app.get("signupCollectionObj")
+    let signupObj = request.body;
+    let res = await signupCollectionObj.findOne({username:signupObj.username,password:signupObj.password})
+    console.log(res)
+    if(res===null){
+        //let result = await signupCollectionObj.insertOne(signupObj)
+
+        response.send({message:"Incorrect username or password"});
+
+    }
+    else{
+        //response.send({message:"username already taken",payload:res})
+        console.log('hello')
+        let token=jwt.sign({username:res.username},'abcde',{expiresIn:60})
+        console.log(token)
+        response.send({message:'login success',payload:token,user:res})
+
+    }
+
+}))
+
+
+userApp.post('/signup',expressAsyncHandler(async(request,response)=>{
+
+    let signupCollectionObj = request.app.get("signupCollectionObj")
+    let signupObj = request.body;
+    let res = await signupCollectionObj.findOne({username:(signupObj.username)})
+    if(res===null){
+        let result = await signupCollectionObj.insertOne(signupObj)
+
+        response.send({message:"user registered"});
+
+    }
+    else{
+        response.send({message:"username already taken",payload:res})
+    }
 
 }))
 

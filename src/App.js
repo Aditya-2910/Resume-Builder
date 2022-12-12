@@ -6,7 +6,8 @@ import EducationForm from './components/EducationForm'
 import SkillsForm from './components/SkillsForm';
 import SummaryForm from './components/SummaryForm';
 import TemplateSelectAndDownload from './components/TemplateSelectAndDownload';
-import allobj from './components/allobj';
+import Login from './components/Login';
+import Signup from './components/Signup';
 
 const DBurl = "mongodb+srv://Newuser-29:New@user-29@asrinivascluster.gddxiog.mongodb.net/?retryWrites=true&w=majority";
 
@@ -53,7 +54,9 @@ function App() {
 
                 <Route path='' element={<Home/>}/>
 
-                <Route path='' element={}/>
+                <Route path='Login' element={<Login/>}/>
+
+                <Route path='Signup' element={<Signup/>}/>
 
                 <Route path='Forms' element={<Forms/>}/>
 
