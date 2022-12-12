@@ -1,5 +1,7 @@
 import React,{useState} from 'react'
 import {useForm} from 'react-hook-form'
+import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 function SkillsForm() {
 
@@ -8,12 +10,24 @@ function SkillsForm() {
 
     let [skills,setSkills] = useState([])
  
+    const navigate = useNavigate()
 
     const onSaveNext = (skillsObj)=>{
 
         console.log(skillsObj)
    
         setSkills([...skills,skillsObj])
+        axios.post('http://localhost:4000/user-api/create-user',skillsObj)
+        .then(response=>{
+        console.log(response);
+        if(response.data.message==='User created successfully')
+        {
+            navigate('/SummaryForm');
+        }
+    })
+    .catch(err=>{
+        console.log('Error in submitting form',err);
+    })
         
    
    }

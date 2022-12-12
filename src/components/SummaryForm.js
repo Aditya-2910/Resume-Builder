@@ -1,10 +1,14 @@
 import React,{useState} from 'react'
 import {useForm} from 'react-hook-form'
+import {useNavigate} from 'react-router-dom'
+import axios from 'axios'
+
 
 function SummaryForm() {
 
   const {register,handleSubmit,formState:{errors}} = useForm()
 
+  const navigate = useNavigate()
 
   let [summary,setSummary] = useState([])
 
@@ -14,6 +18,17 @@ function SummaryForm() {
       console.log(summaryObj)
  
       setSummary([...summary,summaryObj])
+      axios.post('http://localhost:4000/user-api/create-user',summaryObj)
+        .then(response=>{
+        console.log(response);
+        if(response.data.message==='User created successfully')
+        {
+            navigate('/EducationForm');
+        }
+    })
+    .catch(err=>{
+        console.log('Error in submitting form',err);
+    })
       
  
  }

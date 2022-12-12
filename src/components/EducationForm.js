@@ -1,11 +1,14 @@
 import React,{useState} from 'react'
 import {useForm} from 'react-hook-form';
+import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 function EducationForm() {
 
 
     const {register,handleSubmit,formState:{errors}} = useForm()
 
+    const navigate = useNavigate;
 
     let [education,setEducation] = useState([])
  
@@ -15,6 +18,17 @@ function EducationForm() {
         console.log(educationObj)
    
         setEducation([...education,educationObj])
+        axios.post('http://localhost:4000/user-api/create-user',educationObj)
+        .then(response=>{
+        console.log(response);
+        if(response.data.message==='User created successfully')
+        {
+            navigate('/SkillsForm');
+        }
+    })
+    .catch(err=>{
+        console.log('Error in submitting form',err);
+    })
         
    
    }
@@ -125,7 +139,7 @@ function EducationForm() {
 
         <div className='d-flex justify-content-between mt-4'>
 
-        <button  className="btn bg-info">Back</button>
+        <button  className="bg-info btn">Back</button>
 
 
         <button type='submit' className="btn bg-warning " onClick={onClickingSave}>Save</button>

@@ -1,12 +1,15 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import {useForm} from 'react-hook-form';
-
+import {useNavigate} from 'react-router-dom';
 
 
 
 function ExperienceForm() {
   
     const {register,handleSubmit,formState:{errors}} = useForm()
+
+    const navigate = useNavigate()
 
 
     let [experience,setExperience] = useState([])
@@ -17,6 +20,18 @@ function ExperienceForm() {
         console.log(experienceObj)
    
         setExperience([...experience,experienceObj])
+        axios.post('http://localhost:4000/user-api/create-user',experienceObj)
+        .then(response=>{
+        console.log(response);
+        if(response.data.message==='User created successfully')
+        {
+            navigate('/EducationForm');
+        }
+    })
+    .catch(err=>{
+        console.log('Error in submitting form',err);
+    })
+
         
    
    }

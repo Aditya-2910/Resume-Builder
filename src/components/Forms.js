@@ -1,6 +1,7 @@
 import {useForm} from 'react-hook-form';
 import { useState } from 'react';
-
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
 
 
@@ -9,17 +10,29 @@ function Forms() {
   
 const {register,handleSubmit,formState:{errors}} = useForm()
   
-  
-  
+//for navigation purpose
+const navigate = useNavigate()
+
 let [profile,setProfile] = useState([])
   
 const onSaveNext = (profileObj)=>{
 
-     console.log(profileObj)
+    console.log(profileObj)
 
-     setProfile([...profile,profileObj])
+    setProfile([...profile,profileObj])
      
-
+    axios.post('http://localhost:4000/user-api/create-user',profileObj)
+    .then(response=>{
+        console.log(response);
+        if(response.data.message==='User created successfully')
+        {
+            navigate('/ExperienceForm');
+        }
+    })
+    .catch(err=>{
+        console.log('Error in submitting form',err);
+    })
+    
 }
 
  const onClickingSave=()=>{
@@ -37,7 +50,7 @@ const onSaveNext = (profileObj)=>{
 
             <p className="fst-italic" style={{paddingLeft:'120px'}}><b>Note:</b>Employers will use this information to contact you.</p>
 
-            <form className='container' onSubmit={handleSubmit(onSaveNext)}>
+            <form method ="POST" className='container' onSubmit={handleSubmit(onSaveNext)}>
 
 
                
@@ -208,7 +221,7 @@ const onSaveNext = (profileObj)=>{
 
                </div>
             </form>
-            <button className='btn d-block mx-auto bg-warning'><a href='http://localhost:3000/ExperienceForm'>Go To NextPage</a></button>
+            <button className='btn d-block mx-auto bg-warning'><a href='http://localhost:4000/ExperienceForm'>Go To NextPage</a></button>
 
                
                 {/* <div className='container'>

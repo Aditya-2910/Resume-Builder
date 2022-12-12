@@ -6,6 +6,15 @@ import EducationForm from './components/EducationForm'
 import SkillsForm from './components/SkillsForm';
 import SummaryForm from './components/SummaryForm';
 import TemplateSelectAndDownload from './components/TemplateSelectAndDownload';
+import allobj from './components/allobj';
+
+const DBurl = "mongodb+srv://Newuser-29:New@user-29@asrinivascluster.gddxiog.mongodb.net/?retryWrites=true&w=majority";
+
+
+
+//connect with mongodb server
+
+
 
 function App() {
   return (
@@ -29,6 +38,9 @@ function App() {
                   <li className="nav-item" style={{paddingRight:'20px'}}>
                       <a className="nav-link" href="#">Help</a>
                   </li>
+                  <li className="nav-item"  style={{paddingRight:'20px'}}>
+                      <NavLink style={{color:'black',textDecorationLine:'none'}} to='Login'>Login</NavLink>
+                  </li>
               </ul>
           </div>
         </nav>
@@ -40,6 +52,8 @@ function App() {
 
 
                 <Route path='' element={<Home/>}/>
+
+                <Route path='' element={}/>
 
                 <Route path='Forms' element={<Forms/>}/>
 

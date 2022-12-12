@@ -4,7 +4,7 @@ function TemplateSelectAndDownload() {
   return (
     <div>
 
-        <p className="display-1">Enjoyy!!PAndaogww</p>
+        <p className="display-1">Download</p>
 
 
     </div>
