@@ -20,7 +20,10 @@ function ExperienceForm() {
         console.log(experienceObj)
    
         setExperience([...experience,experienceObj])
-        axios.post('http://localhost:4000/user-api/create-user',experienceObj)
+
+        experienceObj["token"] = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/user-api/update-user',experienceObj)
         .then(response=>{
         console.log(response);
         if(response.data.message==='User created successfully')

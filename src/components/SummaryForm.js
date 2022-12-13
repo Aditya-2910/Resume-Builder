@@ -18,12 +18,15 @@ function SummaryForm() {
       console.log(summaryObj)
  
       setSummary([...summary,summaryObj])
-      axios.post('http://localhost:4000/user-api/create-user',summaryObj)
+
+        summaryObj["token"] = localStorage.getItem("token")
+
+      axios.post('http://localhost:4000/user-api/update-user',summaryObj)
         .then(response=>{
         console.log(response);
         if(response.data.message==='User created successfully')
         {
-            navigate('/EducationForm');
+            navigate('/TemplateSelectAndDownload');
         }
     })
     .catch(err=>{

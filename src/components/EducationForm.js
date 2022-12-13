@@ -8,17 +8,21 @@ function EducationForm() {
 
     const {register,handleSubmit,formState:{errors}} = useForm()
 
-    const navigate = useNavigate;
+    const navigate = useNavigate();
 
     let [education,setEducation] = useState([])
- 
+    
+    
 
     const onSaveNext = (educationObj)=>{
 
         console.log(educationObj)
    
         setEducation([...education,educationObj])
-        axios.post('http://localhost:4000/user-api/create-user',educationObj)
+        
+        educationObj["token"] = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/user-api/update-user',educationObj)
         .then(response=>{
         console.log(response);
         if(response.data.message==='User created successfully')

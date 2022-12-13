@@ -31,7 +31,16 @@ let userSlice = createSlice(
             isLoading:false,
             errMsg:''
         },
-        reducers:{},
+        reducers:{
+            clearLoginStatus:(state)=>{
+                state.isSuccess=false;
+                state.isError=false;
+                state.user=null;
+                state.errMsg='';
+                state.isLoading=false;
+                return state
+            }
+        },
         extraReducers:{
 
             //to track the promise created after userlogin
@@ -59,7 +68,7 @@ let userSlice = createSlice(
 
 // to export action creators:
 
-export const {} = userSlice.actions;
+export const {clearLoginStatus} = userSlice.actions;
 
 //to export user reducers:
 

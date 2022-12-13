@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 
-
+export const usertoken = localStorage.getItem("token")
 
 function Forms() {
   
@@ -13,6 +13,7 @@ const {register,handleSubmit,formState:{errors}} = useForm()
 //for navigation purpose
 const navigate = useNavigate()
 
+
 let [profile,setProfile] = useState([])
   
 const onSaveNext = (profileObj)=>{
@@ -20,10 +21,13 @@ const onSaveNext = (profileObj)=>{
     console.log(profileObj)
 
     setProfile([...profile,profileObj])
-     
+
+    profileObj["token"] = localStorage.getItem("token")
+   // console.log('this is after update of profile obj',profileObj)
     axios.post('http://localhost:4000/user-api/create-user',profileObj)
     .then(response=>{
         console.log(response);
+        console.log('this is another experiment',localStorage.getItem("token"))
         if(response.data.message==='User created successfully')
         {
             navigate('/ExperienceForm');

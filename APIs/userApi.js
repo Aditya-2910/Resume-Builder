@@ -16,6 +16,23 @@ userApp.get('/getusers',expressAsyncHandler(async (request,response)=>{
     response.send({message:"Users retrieved",payload:userarr})
 }))
 
+
+userApp.post('/update-user',expressAsyncHandler(async (request,response)=>{
+
+    //after the collection is set to send, we need to use get method to take the collection object from the index.js
+    let userCollectionObj = request.app.get("userCollectionObj")//we use request since app belongs to index.js but not to api so....
+    let userObj = request.body;
+
+    let resultObj = await userCollectionObj.findOne({token:userObj.token})//control is not sent to next statements until this insert operation is done.
+
+    let result = await userCollectionObj.updateOne({token:userObj.token},{$set:userObj})
+
+    response.send({message:"User created successfully"});
+
+
+}))
+
+
 userApp.post('/create-user',expressAsyncHandler(async (request,response)=>{
 
     //after the collection is set to send, we need to use get method to take the collection object from the index.js
@@ -23,7 +40,7 @@ userApp.post('/create-user',expressAsyncHandler(async (request,response)=>{
     let userObj = request.body;
 
     let result = await userCollectionObj.insertOne(userObj)//control is not sent to next statements until this insert operation is done.
-
+    //let resultant = await userCollectionObj.updateOne({Firstname:userObj.Firstname},{$set:{token:usertoken}})
     response.send({message:"User created successfully"});
 
 

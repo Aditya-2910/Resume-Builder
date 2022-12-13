@@ -4,7 +4,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import {useDispatch,useSelector} from 'react-redux';
-
+import {userLogin} from '../slices/userslice'
 
 
 
@@ -17,18 +17,22 @@ function Login() {
     
     let [Login,setLogin] = useState([])
 
-    let {} = useSelector(state=>StaticRange.user)
+    let {userObj,isError,isLoading,isSuccess,errMsg} = useSelector(state=>state.user)
 
+    let dispatch = useDispatch();
 
       
     const onLogin = (loginObj)=>{
     
         console.log(loginObj)
+
+        dispatch(userLogin(loginObj))
     
         setLogin([...Login,loginObj])
          axios.post('http://localhost:4000/user-api/Login',loginObj)
          .then(response=>{
             console.log(response)
+            navigate('/Forms')
          })
 
          .catch(err=>{

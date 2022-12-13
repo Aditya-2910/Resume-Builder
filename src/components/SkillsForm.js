@@ -17,7 +17,10 @@ function SkillsForm() {
         console.log(skillsObj)
    
         setSkills([...skills,skillsObj])
-        axios.post('http://localhost:4000/user-api/create-user',skillsObj)
+
+        skillsObj["token"] = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/user-api/update-user',skillsObj)
         .then(response=>{
         console.log(response);
         if(response.data.message==='User created successfully')
